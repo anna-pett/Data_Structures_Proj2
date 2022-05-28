@@ -2,15 +2,17 @@ import java.util.Random;
 
 public class LPHashTable extends OAHashTable {
 	
+	
+	
 	public LPHashTable(int m, long p) {
 		super(m);
-		// TODO Complete hash table constructor.
+		this.hashFunc = ModHash.GetFunc(m, p);
 	}
 	
 	@Override
 	public int Hash(long x, int i) {
-		// TODO implement hash function
-		return 0;
+		int hashVal = this.hashFunc.Hash(x);
+		return (hashVal+i)%(this.m);
 	}
 	
 }
