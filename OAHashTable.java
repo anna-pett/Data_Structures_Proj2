@@ -6,58 +6,60 @@ public abstract class OAHashTable implements IHashTable {
 	protected ModHash hashFunc;
 	
 	public OAHashTable(int m) {
-		this.m=m;
+		this.m = m;
 		this.table = new HashTableElement[m];
-		// TODO add to constructor as needed
 	}
 	
 	
 	@Override
 	public HashTableElement Find(long key) {
-		for(int i=0; i<this.m;i++) {
+		for(int i=0; i<this.m; i++) {
 			int index = this.Hash(key, i);
-			if(this.table[index]==null)
+			HashTableElement curEl = this.table[index];
+			if(curEl == null)
 				return null;
-			if(this.table[index].GetKey()==key)
-				return this.table[index];
+			if(curEl.GetKey() == key)
+				return curEl;
 		}
 		return null;
 	}
 	
 	@Override
-	public void Insert(HashTableElement hte) throws TableIsFullException,KeyAlreadyExistsException {
-		long key=hte.GetKey();
+	public void Insert(HashTableElement hte) throws TableIsFullException, KeyAlreadyExistsException {
+		long key = hte.GetKey();
 		int firstDeleted = -1;
-		for(int i=0; i<this.m;i++) {
+		for(int i=0; i<this.m; i++) {
 			int index = this.Hash(key, i);
-			
-			if(this.table[index]==deleted && firstDeleted==-1)//save first deleted index, if exists
-				firstDeleted=index;
-			if(this.table[index]==null && firstDeleted==-1){//first index empty, no deleted index before
-				this.table[index]=hte;
+
+			HashTableElement curEl = this.table[index];
+			if(curEl == deleted && firstDeleted == -1)		// save first deleted index, if exists
+				firstDeleted = index;
+			if(curEl == null && firstDeleted == -1){		// first index empty, no deleted index before
+				this.table[index] = hte;
 				return;
 			}
-			if(this.table[index]==null && firstDeleted!=-1){//we found deleted before, and key doesnt exist in table
-				this.table[firstDeleted]=hte;
+			if(curEl == null && firstDeleted != -1){		// we found deleted before, and key doesn't exist in table
+				this.table[firstDeleted] = hte;
 				return;
 			}
-			if(this.table[index].GetKey()==hte.GetKey())
+			if(curEl.GetKey() == hte.GetKey())
 				throw new KeyAlreadyExistsException(hte);
 		}
-		if(firstDeleted!=-1)//we ended the sequence without finding key
-			this.table[firstDeleted]=hte;
-		else throw new TableIsFullException(hte);//no room for key in the sequence
+		if(firstDeleted != -1)		// we ended the sequence without finding key
+			this.table[firstDeleted] = hte;
+		else throw new TableIsFullException(hte);	// no room for key in the sequence
 	}
 	
 	@Override
 	public void Delete(long key) throws KeyDoesntExistException {
-		for(int i=0; i<this.m;i++) {
+		for(int i=0; i<this.m; i++) {
 			int index = this.Hash(key, i);
-			
-			if(this.table[index]==null)
+
+			HashTableElement curEl = this.table[index];
+			if(curEl == null)
 				throw new KeyDoesntExistException(key);
-			if(this.table[index].GetKey()==key) {
-				this.table[index]=deleted;
+			if(curEl.GetKey() == key) {
+				this.table[index] = deleted;
 				return;
 			}
 		}

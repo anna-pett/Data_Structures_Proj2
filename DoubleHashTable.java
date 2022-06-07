@@ -15,7 +15,7 @@ public class DoubleHashTable extends OAHashTable {
 	public int Hash(long x, int i) {
 		int firstHashVal = this.hashFunc.Hash(x);
 		int secHashVal = this.doubleHash.Hash(x);
-		return (firstHashVal + (i * secHashVal))%(this.m);
+		return (firstHashVal + (i * secHashVal)) % (this.m);
 	}
 	
 }
