@@ -1,7 +1,7 @@
 public abstract class OAHashTable implements IHashTable {
 	
 	private HashTableElement [] table;
-	private static HashTableElement deleted = new HashTableElement(-1,0); 
+	private static final HashTableElement deleted = new HashTableElement(-1,0);		// class sentinel for deleted cells
 	protected int m;
 	protected ModHash hashFunc;
 	
@@ -9,7 +9,6 @@ public abstract class OAHashTable implements IHashTable {
 		this.m = m;
 		this.table = new HashTableElement[m];
 	}
-	
 	
 	@Override
 	public HashTableElement Find(long key) {
@@ -31,8 +30,11 @@ public abstract class OAHashTable implements IHashTable {
 		for(int i=0; i<this.m; i++) {
 			int index = this.Hash(key, i);
 
+//			if (index < 0)
+//				System.out.println("BLOOP " + index);
+
 			HashTableElement curEl = this.table[index];
-			if(curEl == deleted && firstDeleted == -1)		// save first deleted index, if exists
+			if(curEl == deleted && firstDeleted == -1)		// save first deleted index, if exists. compare by reference.
 				firstDeleted = index;
 			if(curEl == null && firstDeleted == -1){		// first index empty, no deleted index before
 				this.table[index] = hte;

@@ -2,20 +2,24 @@ import java.util.Random;
 
 public class DoubleHashTable extends OAHashTable {
 	
-	private ModHash doubleHash;
+	private final ModHash doubleHash;
 	
 	public DoubleHashTable(int m, long p) {
 		super(m);
 		this.hashFunc = ModHash.GetFunc(m, p);
-		this.doubleHash = ModHash.GetFunc(m, p);
+		this.doubleHash = ModHash.GetFunc(m-1, p);
 		
 	}
 	
 	@Override
 	public int Hash(long x, int i) {
-		int firstHashVal = this.hashFunc.Hash(x);
-		int secHashVal = this.doubleHash.Hash(x);
-		return (firstHashVal + (i * secHashVal)) % (this.m);
+		long firstHashVal = this.hashFunc.Hash(x);
+		long secHashVal = this.doubleHash.Hash(x) + 1;		// make sure it never returns 0
+		long res = (firstHashVal + (i * secHashVal));
+		res %= (this.m);
+//		if (res < 0)
+//			System.out.println("BLEEP-BLEEP " + firstHashVal + " " + i + " " + secHashVal + " " + (firstHashVal + (i * secHashVal)) + " " + res);
+		return (int) res;
 	}
 	
 }
