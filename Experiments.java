@@ -58,7 +58,7 @@ public class Experiments {
         }
     }
 
-    public static long measure_tbl_insertions(IHashTable tbl, int insertions, HashTableElement[] htelems) {
+    public static double measure_tbl_insertions(IHashTable tbl, int insertions, HashTableElement[] htelems) {
 
         long startTime = System.nanoTime();
         for (int i=0; i<insertions; i++) {
@@ -69,7 +69,7 @@ public class Experiments {
             }
         }
         long endTime = System.nanoTime();
-        return endTime - startTime;
+        return 1d*(endTime - startTime) / 1_000_000_000;
     }
 
 
@@ -156,12 +156,12 @@ public class Experiments {
         long sum = 0;
         for (int i = 0; i < 3; i++)
             sum += runtimes[i];
-        System.out.println("first 3 runs: " + sum/3);
+        System.out.println("first 3 runs: " + ((1d*(sum/3)) / 1_000_000_000) );
 
         sum = 0;
         for (int i = 3; i < 6; i++)
             sum += runtimes[i];
-        System.out.println("last 3 runs: " + sum/3);
+        System.out.println("last 3 runs: " + ((1d*(sum/3)) / 1_000_000_000) );
 
         System.out.println(Arrays.toString(runtimes));
     }
