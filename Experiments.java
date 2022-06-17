@@ -1,9 +1,8 @@
-import javax.swing.plaf.basic.BasicScrollPaneUI;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
+
 
 public class Experiments {
 
@@ -156,25 +155,25 @@ public class Experiments {
         long sum = 0;
         for (int i = 0; i < 3; i++)
             sum += runtimes[i];
-        System.out.println("first 3 runs: " + ((1d*(sum/3)) / 1_000_000_000) );
+        System.out.println("first 3 runs: " + ((1d*(sum)) / 1_000_000_000) );
 
         sum = 0;
         for (int i = 3; i < 6; i++)
             sum += runtimes[i];
-        System.out.println("last 3 runs: " + ((1d*(sum/3)) / 1_000_000_000) );
+        System.out.println("last 3 runs: " + ((1d*(sum)) / 1_000_000_000) );
 
-        System.out.println(Arrays.toString(runtimes));
+//        System.out.println(Arrays.toString(runtimes));
     }
 
     public static void main(String[] args) {
 
-        System.out.println("**** q3_1 ****");
-        q3_1();
-        System.out.println("**** q3_2_a ****");
-        q3_2_a();
-        System.out.println("**** q3_2_b ****");
-        q3_2_b();
-        System.out.println("**** 4_1 ****");
+//        System.out.println("**** q3_1 ****");
+//        q3_1();
+//        System.out.println("**** q3_2_a ****");
+//        q3_2_a();
+//        System.out.println("**** q3_2_b ****");
+//        q3_2_b();
+//        System.out.println("**** 4_1 ****");
         q4_1();
         System.out.println("**** 4_2 ****");
         q4_2();
